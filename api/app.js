@@ -21,7 +21,12 @@ let app = express();
 /// =CORS
 let cors = require('cors');
 
-let whitelist = ['http://localhost:3000', 'http://udany.net:3000', 'http://unir.udany.net'];
+let whitelist = [
+    'http://localhost:3000',
+    'http://dev.test:3000',
+    'http://udany.net:3000',
+    'http://unir.udany.net'
+];
 let corsOptionsDelegate = function (req, callback) {
     var corsOptions;
 

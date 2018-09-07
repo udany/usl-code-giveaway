@@ -53,6 +53,7 @@ module.exports = {
 
     plugins: [
         '../shared/base/extend/',
-        '~/plugins/api'
+        '~/plugins/api',
+        {src: '~/plugins/fb', ssr: false }
     ]
 };
