@@ -4,13 +4,24 @@
 
             <div class="container my-4">
                 <b-row>
-                    <b-col offset-md="3" md="6" offset-lg="4" lg="4">
-                        <h2 class="text-center" v-if="accessKey">
-                            <span v-for="char in accessKey">{{char.toUpperCase()}}</span>
-                        </h2>
-                        <div id="outLoadingBar">
-                            <div id="inLoadingBar" :style="{width: progress+'%', backgroundColor: bckColor}"></div>
-                        </div>
+                    <b-col class="text-center" md="12" lg="12">
+                        <template v-if="!fbReady">
+                            <h2>Carregando...</h2>
+                        </template>
+
+                        <template v-if="fbReady && !user">
+                            <h2 class="text-center">
+                                Entre com o Facebook
+                            </h2>
+
+                            <b-btn variant="info" @click="fbLogin">
+                                Entrar
+                            </b-btn>
+                        </template>
+
+                        <template v-if="user">
+                            <h2>{{user.name}}</h2>
+                        </template>
                     </b-col>
                 </b-row>
             </div>
@@ -31,46 +42,46 @@
             title: "Home"
         }),
         data: () => ({
-            currentTime: 0,
-            loading: false,
-            start: 0,
-            accessKey: ''
+            user: null,
+            code: null,
+            fbReady: false
         }),
+
         async mounted() {
-            this.tick();
-
-            setInterval(() => {
-                this.tick();
-            }, 100);
+            window.addEventListener('fb-sdk-ready', this.onFBReady)
         },
+        beforeDestroy: function () {
+            window.removeEventListener('fb-sdk-ready', this.onFBReady)
+        },
+
         methods: {
-            tick() {
-                this.currentTime = Date.now();
+            onFBReady() {
+                FB.getLoginStatus(async (response) => {
+                    if (response.status === "connected") {
+                        await this.fbGetUser();
+                    }
 
-                if (this.start + 15000 < this.currentTime && !this.loading) {
-                    this.loadAccessKey();
-                }
+                    this.fbReady = true;
+                });
             },
-            async loadAccessKey() {
-                let { data } = await this.$api.get('/keys/current');
-
-                this.start = data.start;
-                this.accessKey = data.key;
+            fbLogin() {
+                FB.login((response) => {
+                    if (response.authResponse) {
+                        this.fbGetUser();
+                    }
+                });
+            },
+            fbGetUser() {
+                return new Promise((accept, reject) => {
+                    FB.api('/me', (response) => {
+                        this.user = response;
+                        accept(response);
+                    });
+                });
             }
         },
         computed: {
-            progress() {
-                return 100 - ((this.currentTime-this.start) / 150)
-            },
-            bckColor() {
-                if (this.progress > 50) {
-                    return '#18ad24';
-                }else if (this.progress>25){
-                    return '#e5c019';
-                }else{
-                    return '#b71212';
-                }
-            }
+
         }
     }
 </script>
@@ -79,18 +90,8 @@
     h2 {
         color: white;
         text-shadow: 0 0 20px rgba(#000, 1), 0 0 10px rgba(#000, 1);
-
-        span {
-            display: inline-block;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 2px 5px;
-            text-align: center;
-            border-radius: 5px;
-        }
-        span + span {
-            margin-left: 6px;
-        }
     }
+
     .logos{
         text-align: center;
         position: absolute;
@@ -101,22 +102,5 @@
         img {
             height: 140px;
         }
-    }
-    #outLoadingBar{
-        background-color: rgba(0, 0, 0, 0.5);
-        height: 20px;
-        width: 100%;
-        border-radius: 10px;
-        overflow: hidden;
-
-        text-shadow: 0 0 20px rgba(#000, 1), 0 0 10px rgba(#000, 1);
-        padding: 5px;
-    }
-    #inLoadingBar {
-        height: 10px;
-        border-radius: 10px;
-        opacity: .9;
-
-        transition: all .1s, background-color 0.2s;
     }
 </style>
