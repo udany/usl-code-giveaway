@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700|Raleway:400,600');
+@import url('https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700|Raleway:400,600|Press+Start+2P');
 
 @import "./variables";
 @import "./bootstrap";
@@ -6,6 +6,7 @@
 html, body {
     //height: 100%;
     background: $background;
+    background-color: #2f103c;
     color: $text;
     font-family: 'PT Sans', sans-serif;
 }
@@ -19,7 +20,7 @@ html, body {
 }
 
 h1, h2, h3, h4, h5, .fancy-text, .btn {
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Press Start 2P', sans-serif;
 }
 
 .toasted-container.top-right {

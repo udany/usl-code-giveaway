@@ -4,18 +4,14 @@
 
             <div class="container my-4">
                 <b-row>
-                    <b-col>
-                        <b-row>
-                            <b-col offset-md="3" md="6" offset-lg="4" lg="4">
-                                <b-btn to="/register" variant="love" block size="lg" class="mb-4">
-                                    Cadastre-se!
-                                </b-btn>
+                    <b-col offset-md="3" md="6" offset-lg="4" lg="4">
+                        <h2 class="text-center">
+                            {{accessKey.toUpperCase()}} - {{currentTime-start}}
+                        </h2>
+                        <div id="loadingBar">
 
-                                <b-btn variant="primary" block size="lg">
-                                    {{hello}}
-                                </b-btn>
-                            </b-col>
-                        </b-row>
+                        </div>
+
                     </b-col>
                 </b-row>
             </div>
@@ -25,50 +21,43 @@
 </template>
 
 <script>
-    import config from '../config';
-    import User from 'shared/entities/User';
-    import Square from '../components/Square';
-
     export default {
-        layout: 'external',
         head: () => ({
             title: "Home"
         }),
         data: () => ({
-            hello: 'world',
-            rotatingText: [
-                "pessoas",
-                "caminhos",
-                "paixões",
-                "destinos",
-                "amores",
-                "corações",
-                "sorrisos",
-                "casais",
-                "amigos",
-                "ficantes"
-            ].shuffle(),
-
-            users: [],
-            config
+            currentTime: 0,
+            loading: false,
+            start: 0,
+            accessKey: ''
         }),
-        async asyncData({app}) {
-            let {data: users} = await app.$api.get(`/user/`);
+        async mounted() {
+            this.tick();
 
-            return {users};
-        },
-        components: {Square},
-        created() {
-            this.users = this.users.map(d => new User(d));
-        },
-        mounted() {
-
+            setInterval(() => {
+                this.tick();
+            }, 500);
         },
         methods: {
+            tick() {
+                this.currentTime = Date.now();
+
+                if (this.start + 15000 < this.currentTime && !this.loading) {
+                    this.loadAccessKey();
+                }
+            },
+            async loadAccessKey() {
+                let { data } = await this.$api.get('/keys/current');
+
+                this.start = data.start;
+                this.accessKey = data.key;
+            }
         }
     }
 </script>
 
 <style lang="scss">
-
+#loadingBar {
+    background-color: darkred;
+}
 </style>
