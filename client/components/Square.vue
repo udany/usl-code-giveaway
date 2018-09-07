@@ -6,6 +6,12 @@
     </div>
 </template>
 
+<script>
+    export default {
+        name: 'square'
+    }
+</script>
+
 <style>
     .square{
         width: 100%;

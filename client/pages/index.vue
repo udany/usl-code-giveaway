@@ -12,7 +12,7 @@
                                 </b-btn>
 
                                 <b-btn variant="primary" block size="lg">
-                                    Login
+                                    {{hello}}
                                 </b-btn>
                             </b-col>
                         </b-row>
@@ -27,6 +27,7 @@
 <script>
     import config from '../config';
     import User from 'shared/entities/User';
+    import Square from '../components/Square';
 
     export default {
         layout: 'external',
@@ -34,6 +35,7 @@
             title: "Home"
         }),
         data: () => ({
+            hello: 'world',
             rotatingText: [
                 "pessoas",
                 "caminhos",
@@ -46,9 +48,6 @@
                 "amigos",
                 "ficantes"
             ].shuffle(),
-            currentTextIndex: 0,
-            preShowText: false,
-            hideText: false,
 
             users: [],
             config
@@ -58,7 +57,7 @@
 
             return {users};
         },
-        components: {},
+        components: {Square},
         created() {
             this.users = this.users.map(d => new User(d));
         },

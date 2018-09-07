@@ -7,7 +7,7 @@
 <script>
     export default {
         head: () => ({
-            titleTemplate: "UNIr - %s"
+            titleTemplate: "UNIRIO Summoners - %s"
         }),
         data: () => ({
         })
