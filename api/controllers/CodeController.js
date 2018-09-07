@@ -48,11 +48,25 @@ export default {
 	start() {
 		codeManager.start();
 	},
-	getUserCode() {
-
+	getUser(userId) {
+		return users.find(x => x.id === parseInt(userId));
 	},
-	assignCodeToUser() {
+	assignCodeToUser(userId) {
+		let user = users.find(x => x.id === userId);
 
+		if (!user) {
+			user = {id: userId};
+			users.push(user);
+		}
+
+		if (!user.code) {
+			user.code = unassignedCodes[0].code;
+			unassignedCodes.splice(0, 1);
+		}
+
+		userManager.saveFile();
+
+		return user;
 	},
 	allCodes() {
 		return codes;
