@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700|Raleway:400,600');
+
+@import "./variables";
+@import "./bootstrap";
+
+html, body {
+    //height: 100%;
+    background: $background;
+    color: $text;
+    font-family: 'PT Sans', sans-serif;
+}
+
+.no-scroll {
+    overflow: hidden;
+}
+
+#__nuxt {
+    //height: 100%;
+}
+
+h1, h2, h3, h4, h5, .fancy-text, .btn {
+    font-family: 'Raleway', sans-serif;
+}
+
+.toasted-container.top-right {
+    top: 1em !important;
+}
+
+.page-enter-active, .page-leave-active {
+    transition: opacity .2s;
+}
+.page-enter {
+    opacity: 0;
+}
+.page-leave-to {
+    opacity: 0;
+}
+
+.text-sm {
+    font-size: .7em;
+}
+.text-xs {
+    font-size: .5em;
+}
+
+
+.btn {
+    color: #fff;
+    border-radius: 0;
+    transition: all .2s;
+}
+.btn.btn-warning {
+    color: #333 !important;
+}
+.btn:hover {
+    text-shadow: none;
+}
+
+.input-group-text {
+    border-radius: 0 !important;
+}
+
+.clear {
+    clear: both;
+}
+
+/* Unselectable */
+.no-select {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
+    cursor: default;
+}
+.full-select {
+    -webkit-touch-callout: default; /* iOS Safari */
+    -webkit-user-select: text; /* Chrome/Safari/Opera */
+    -khtml-user-select: text; /* Konqueror */
+    -moz-user-select: text; /* Firefox */
+    -ms-user-select: text; /* Internet Explorer/Edge */
+    user-select: text; /* Non-prefixed version, currently
+                                  not supported by any browser */
+    cursor: text;
+}
