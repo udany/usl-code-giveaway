@@ -1,7 +1,10 @@
 <template>
     <div>
         <div id="bckVideo">
-            <video src="/bck.mp4"  loop autoplay muted plays-inline></video>
+            <video loop autoplay muted plays-inline>
+                <source src="/bck.mp4" type="video/mp4">
+                <source src="/bck.ogv" type="video/ogv">
+            </video>
         </div>
 
         <div id="content">
