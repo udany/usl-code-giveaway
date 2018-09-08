@@ -11,6 +11,9 @@
                         <div id="outLoadingBar">
                             <div id="inLoadingBar" :style="{width: progress+'%', backgroundColor: bckColor}"></div>
                         </div>
+
+                        <b-input type="password" v-model="password" v-if="!intervalId"></b-input>
+                        <b-btn v-if="!intervalId" variant="info" block @click="startTick">Exibir</b-btn>
                     </b-col>
                 </b-row>
             </div>
@@ -27,24 +30,29 @@
 
 <script>
     export default {
+        name: 'keyShow',
         head: () => ({
             title: 'Home'
         }),
         data: () => ({
             currentTime: 0,
             loading: false,
+            intervalId: null,
             start: 0,
             expiryTime: 1,
-            accessKey: ''
+            accessKey: '',
+            password: ''
         }),
         async mounted() {
-            this.tick();
-
-            setInterval(() => {
-                this.tick();
-            }, 100);
         },
         methods: {
+            startTick() {
+                this.tick();
+
+                this.intervalId = setInterval(() => {
+                    this.tick();
+                }, 100);
+            },
             tick() {
                 this.currentTime = Date.now();
 
@@ -53,11 +61,16 @@
                 }
             },
             async loadAccessKey() {
-                let {data} = await this.$api.get('/keys/current');
+                if (!this.password) return;
 
-                this.start = Date.now() - data.elapsed;
-                this.accessKey = data.key;
-                this.expiryTime = data.expiry;
+                let {data} = await this.$api.get('/keys/current?pass='+this.password);
+
+                if (data.status) {
+                    data = data.data;
+                    this.start = Date.now() - data.elapsed;
+                    this.accessKey = data.key;
+                    this.expiryTime = data.expiry;
+                }
             }
         },
         computed: {
