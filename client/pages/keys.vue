@@ -4,13 +4,19 @@
 
             <div class="container my-4">
                 <b-row>
-                    <b-col offset-md="3" md="6" offset-lg="4" lg="4">
+                    <b-col offset-md="1" md="10" offset-lg="3" lg="6">
+
                         <h2 class="text-center" v-if="accessKey">
                             <span v-for="char in accessKey">{{char.toUpperCase()}}</span>
                         </h2>
+
                         <div id="outLoadingBar">
                             <div id="inLoadingBar" :style="{width: progress+'%', backgroundColor: bckColor}"></div>
                         </div>
+
+                        <h2 class="text-center">
+                            cblol.udany.net
+                        </h2>
 
                         <b-input type="password" v-model="password" v-if="!intervalId"></b-input>
                         <b-btn v-if="!intervalId" variant="info" block @click="startTick">Exibir</b-btn>
