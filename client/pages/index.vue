@@ -14,7 +14,7 @@
                                 Entre com o Facebook
                             </h2>
 
-                            <b-btn variant="info" @click="fbLogin">
+                            <b-btn class="getCodeButton" variant="info" @click="fbLogin">
                                 Entrar
                             </b-btn>
                         </template>
@@ -28,7 +28,7 @@
                                 <b-row>
                                     <b-col class="text-center" offset-md="3" md="6" >
                                         <b-input id="keyInput" v-model="enteredKey" placeholder="Chave" />
-                                        <b-btn id="getCodeButton" block variant="info" @click="requestCode">
+                                        <b-btn class="getCodeButton" block variant="info" @click="requestCode">
                                             Resgatar código
                                         </b-btn>
                                     </b-col>
@@ -129,7 +129,7 @@
 </script>
 
 <style lang="scss">
-    #getCodeButton{
+    .getCodeButton{
         background-color: rgba(78, 9, 168, 0.91);
         border: none;
         border-radius: 5px;
