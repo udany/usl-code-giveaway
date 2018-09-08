@@ -4,7 +4,9 @@
             <video src="/bck.mp4"  loop autoplay muted plays-inline></video>
         </div>
 
-        <nuxt/>
+        <div id="content">
+            <nuxt/>
+        </div>
     </div>
 </template>
 
@@ -69,5 +71,10 @@
             background: linear-gradient(right, rgba(#000, 1), rgba(#1a0921, 0));
             z-index: 1;
         }
+    }
+
+    #content {
+        position: relative;
+        z-index: 3;
     }
 </style>

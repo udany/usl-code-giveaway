@@ -158,6 +158,8 @@
         color: white;
         border-radius: 10px;
         display: inline-block;
+
+        word-break: break-all;
     }
 
     .logos{
@@ -169,6 +171,15 @@
 
         img {
             height: 140px;
+        }
+    }
+
+    @media (max-width: 768px) {
+
+        .logos{
+            img {
+                height: 80px;
+            }
         }
     }
 </style>
