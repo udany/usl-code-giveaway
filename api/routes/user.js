@@ -19,7 +19,7 @@ router.get('/getCode/:id', async function (req, res, next) {
 router.get('/requestCode/:key/:id', async function (req, res, next) {
 	let currentKey = AccessKeyController.getCurrentHash(Date.now());
 
-	if (currentKey === req.params.key){
+	if (currentKey === req.params.key.toLowerCase()){
 		let user = CodeController.assignCodeToUser(req.params.id);
 
 		res.send(new SuccessReply(user));

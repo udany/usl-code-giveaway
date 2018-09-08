@@ -49,7 +49,7 @@ export default {
 		codeManager.start();
 	},
 	getUser(userId) {
-		return users.find(x => x.id === parseInt(userId));
+		return users.find(x => x.id === userId);
 	},
 	assignCodeToUser(userId) {
 		let user = users.find(x => x.id === userId);
