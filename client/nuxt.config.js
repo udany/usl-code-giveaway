@@ -9,7 +9,7 @@ module.exports = {
             {hid: 'description', name: 'description', content: 'Client App'}
         ],
         link: [
-            {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
+            {rel: 'icon', type: 'image/x-icon', href: '/favicon.png'}
         ]
     },
 
