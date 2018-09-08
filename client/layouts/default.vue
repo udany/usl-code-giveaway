@@ -28,6 +28,8 @@
         position: absolute;
         top: 0;
         bottom: 0;
+        background: url('/bck.jpg') center center;
+        background-size: cover;
 
         width: 100%;
         height: 100%;
