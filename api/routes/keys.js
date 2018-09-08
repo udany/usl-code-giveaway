@@ -9,7 +9,8 @@ router.get('/current', async function (req, res, next) {
 
 	res.send({
 		key: AccessKeyController.getCurrentHash(time),
-		start: AccessKeyController.getCurrentStartTime(time)
+		elapsed: time - AccessKeyController.getCurrentStartTime(time),
+		expiry: AccessKeyController.getExpiryTime()
 	});
 });
 

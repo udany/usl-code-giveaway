@@ -28,12 +28,13 @@
 <script>
     export default {
         head: () => ({
-            title: "Home"
+            title: 'Home'
         }),
         data: () => ({
             currentTime: 0,
             loading: false,
             start: 0,
+            expiryTime: 1,
             accessKey: ''
         }),
         async mounted() {
@@ -47,27 +48,30 @@
             tick() {
                 this.currentTime = Date.now();
 
-                if (this.start + 15000 < this.currentTime && !this.loading) {
+                if (this.start + this.expiryTime * 1000 < this.currentTime && !this.loading) {
                     this.loadAccessKey();
                 }
             },
             async loadAccessKey() {
-                let { data } = await this.$api.get('/keys/current');
+                let {data} = await this.$api.get('/keys/current');
 
-                this.start = data.start;
+                this.start = Date.now() - data.elapsed;
                 this.accessKey = data.key;
+                this.expiryTime = data.expiry;
             }
         },
         computed: {
             progress() {
-                return 100 - ((this.currentTime-this.start) / 150)
+                return 100 - ((this.currentTime - this.start) / (this.expiryTime * 10))
             },
             bckColor() {
-                if (this.progress > 50) {
+                if (this.progress > 80) {
+                    return '#4fdb4a';
+                } else if (this.progress > 50) {
                     return '#18ad24';
-                }else if (this.progress>25){
+                } else if (this.progress > 25) {
                     return '#e5c019';
-                }else{
+                } else {
                     return '#b71212';
                 }
             }
@@ -91,7 +95,8 @@
             margin-left: 6px;
         }
     }
-    .logos{
+
+    .logos {
         text-align: center;
         position: absolute;
         bottom: 0;
@@ -102,7 +107,8 @@
             height: 140px;
         }
     }
-    #outLoadingBar{
+
+    #outLoadingBar {
         background-color: rgba(0, 0, 0, 0.5);
         height: 20px;
         width: 100%;
@@ -112,6 +118,7 @@
         text-shadow: 0 0 20px rgba(#000, 1), 0 0 10px rgba(#000, 1);
         padding: 5px;
     }
+
     #inLoadingBar {
         height: 10px;
         border-radius: 10px;
