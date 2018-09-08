@@ -8,7 +8,7 @@
         "dev": "nuxt",
         "build": "nuxt build",
         "start": "nuxt start",
-        "start-prod": "HOST=174.138.47.54 PORT=3000 nuxt start"
+        "start-prod": "HOST=174.138.47.54 PORT=8051 nuxt start"
     },
     "dependencies": {
         "@nuxtjs/font-awesome": "^1.0.3",
